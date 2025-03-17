@@ -11,7 +11,7 @@ import ru.hogwarts.school.model.Student;
 public class StudentService {
 
   private final Map<Long, Student> students = new HashMap<>();
-  private Long idCounter = 0L;
+  private static Long idCounter = 0L;
 
   public Student create(Student student) {
     student.setId(++idCounter);

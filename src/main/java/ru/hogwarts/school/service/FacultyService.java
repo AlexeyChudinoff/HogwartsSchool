@@ -12,7 +12,7 @@ import ru.hogwarts.school.model.Faculty;
 public class FacultyService {
 
   private final HashMap<Long, Faculty> facultys = new HashMap<>();
-  public Long lastId = 0L;
+  private static Long lastId = 0L;
 
   public Faculty createFaculty(Faculty faculty) {
     faculty.setId(++lastId);
