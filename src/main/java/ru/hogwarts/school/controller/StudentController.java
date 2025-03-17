@@ -1,10 +1,18 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.web.bind.annotation.*;
+import java.util.Collection;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
-
-import java.util.Collection;
 
 @RestController
 @RequestMapping("/student")
@@ -30,8 +38,10 @@ public class StudentController {
   public Collection<Student> getByAge(@PathVariable int age) {
     return studentService.getByAge(age);
   }
-  @GetMapping("/getgender/{gender}")
-  public Collection<Student> getByGender(@PathVariable String gender)  {
+
+  //127.0.0.1:8080/student/getgender?gender=m
+  @GetMapping("/getgender")
+  public Collection<Student> getByGender(@RequestParam String gender) {
     return studentService.getByGender(gender);
   }
 
@@ -41,12 +51,17 @@ public class StudentController {
   }
 
   @PutMapping("/change")
-  public Student updateStudent(@RequestBody Student student) {
-    return studentService.update(student);
+  public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+    Student updatedStudent = studentService.update(student);
+    if (updatedStudent != null) {
+      return ResponseEntity.ok(updatedStudent);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 
-  @DeleteMapping("/{id}")
-  public Student deleteStudent(@PathVariable Long id) {
+  @DeleteMapping("/delite")
+  public Student deleteStudent(@RequestParam Long id) {
     return studentService.deleteById(id);
   }
 }

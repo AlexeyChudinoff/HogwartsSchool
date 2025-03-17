@@ -1,12 +1,11 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Student;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Student;
 
 @Service
 public class StudentService {
@@ -29,6 +28,7 @@ public class StudentService {
         .filter(s -> s.getAge() == age)
         .collect(Collectors.toList());
   }
+
   public Collection<Student> getByGender(String gender) {
     return students.values().stream()
         .filter(s -> s.getGender().equals(gender))
