@@ -11,5 +11,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   //count() возвращает число int — количество записей в таблице;
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
-
 }
