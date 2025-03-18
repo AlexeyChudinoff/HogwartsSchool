@@ -9,6 +9,8 @@ public class Student {
   private int age;
   private String gender;
 
+  public Student() {}
+
   public Student(long id, String name, int age, String gender) {
     this.id = id;
     this.name = name;
@@ -68,4 +70,13 @@ public class Student {
     return Objects.hash(id, name, age, gender);
   }
 
+  @Override
+  public String toString() {
+    return "Student{" +
+        ", id= " + id +
+        ", name= " + name +
+        ", age= " + age +
+        ", gender= " + gender +
+         "}";
+  }
 }

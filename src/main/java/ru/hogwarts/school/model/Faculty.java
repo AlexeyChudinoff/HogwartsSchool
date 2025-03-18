@@ -1,9 +1,21 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.util.Objects;
 
+@Entity(name = "any_faculty")//чтобы модель отвечала за какую-либо
+// определенную таблицу
 public class Faculty {
 
+  public Faculty() {}
+
+  @Id
+@GeneratedValue(strategy = GenerationType.AUTO)//strategy обозначает,
+// что будет использоваться автоинкриментация идентификатора на уровне
+// БД. Т.е. идентификатор будет генерировать база, а не приложение.
   private Long id;
   private String name;
   private String color;
@@ -56,5 +68,13 @@ public class Faculty {
     return Objects.hash(id, name, color);
   }
 
+  @Override
+  public String toString() {
+    return "Faculty{" +
+        " id= " + id +
+        ", color= " + color +
+        ", name= " + name +
+        "}";
+  }
 
 }//
