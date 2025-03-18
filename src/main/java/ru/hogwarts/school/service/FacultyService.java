@@ -49,7 +49,7 @@ public class FacultyService {
   }
 
   public void deleteFaculty(Long id) {
-     facultyRepository.deleteById(id);
+    facultyRepository.deleteById(id);
   }
 
 }
