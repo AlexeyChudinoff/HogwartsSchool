@@ -1,6 +1,8 @@
 package ru.hogwarts.school.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ru.hogwarts.school.model.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -10,5 +12,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   //findAll() возвращает все записи из таблицы;
   //count() возвращает число int — количество записей в таблице;
   //deleteById() удаляет сущность из БД по ее идентификатору;
+
+
+  //SQL-запрос. Для него используется аннотация @Query
+//  @Query("SELECT pos FROM Student pos WHERE pos.name IS NOT NULL")
+//  List<Student> findStudentWithNotNullName();
+
 
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Objects;
 
-@Entity(name = "faculty")//чтобы модель отвечала за какую-либо
+@Entity(name = "facultys")//чтобы модель отвечала за какую-либо
 // определенную таблицу
 public class Faculty {
 

@@ -19,6 +19,10 @@ public class StudentService {
     return studentRepository.save(student);
   }
 
+  //Если же мы хотим получить данные модели по определенному id,
+// то можно использовать метод findById() или getById().
+// Разница между ними лишь в том, что findById возвращает Opltional,
+// а getById (устарел)— сам объект или null, если такой отсутствует.
   public Student getById(Long id) {
     return studentRepository.findById(id).orElse(null);
   }
@@ -51,4 +55,5 @@ public class StudentService {
   public void deleteById(Long id) {
     studentRepository.deleteById(id);
   }
+
 }
