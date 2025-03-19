@@ -12,5 +12,4 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
 
-
 }

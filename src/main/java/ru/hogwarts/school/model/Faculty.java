@@ -6,14 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Objects;
 
-@Entity(name = "any_faculty")//чтобы модель отвечала за какую-либо
+@Entity(name = "faculty")//чтобы модель отвечала за какую-либо
 // определенную таблицу
 public class Faculty {
 
-  public Faculty() {}
+  public Faculty() {
+  }
 
   @Id
-@GeneratedValue(strategy = GenerationType.AUTO)//strategy обозначает,
+  @GeneratedValue(strategy = GenerationType.IDENTITY)//strategy обозначает,
 // что будет использоваться автоинкриментация идентификатора на уровне
 // БД. Т.е. идентификатор будет генерировать база, а не приложение.
   private Long id;
@@ -21,7 +22,7 @@ public class Faculty {
   private String color;
 
   public Faculty(Long id, String name, String color) {
-    this.id = id;
+   // this.id = id;
     this.name = name;
     this.color = color;
   }

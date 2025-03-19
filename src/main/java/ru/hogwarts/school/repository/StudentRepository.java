@@ -12,4 +12,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
 
+  //SQL-запрос. Для него используется аннотация @Query
+//  @Query("SELECT pos FROM Student pos WHERE pos.name IS NOT NULL")
+//  List<Student> findStudentWithNotNullName();
+
+
 }

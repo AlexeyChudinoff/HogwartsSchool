@@ -46,7 +46,7 @@ public class FacultyController {
     return facultyService.getFacultyById(id);
   }
 
-  @PutMapping("/put")
+  @PutMapping("/change")
   public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
     Faculty updateFaculty = facultyService.updateFaculty(faculty);
     if (updateFaculty != null) {
@@ -57,8 +57,9 @@ public class FacultyController {
   }
 
   @DeleteMapping("/deleteById")
-  public Faculty deleteFaculty(@RequestParam Long id) {
-    return facultyService.deleteFaculty(id);
+  public ResponseEntity<Faculty> deleteFaculty(@RequestParam Long id) {
+   facultyService.deleteFaculty(id);
+    return ResponseEntity.ok().build();
   }
 
 
