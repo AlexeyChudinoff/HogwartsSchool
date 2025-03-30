@@ -58,4 +58,20 @@ public class StudentService {
     studentRepository.deleteById(id);
   }
 
+  public Collection<Student> getByAgeBetween(int ageFrom, int ageTo) {
+    return studentRepository.findByAgeBetween(ageFrom, ageTo);
+  }
+
+  public Collection<Student> getByName(String name) {
+    if (name != null) {
+      return studentRepository.findByName(name);
+    } else {
+      return studentRepository.findAll();
+    }
+  }
+
+
+
+
+
 }

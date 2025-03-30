@@ -36,7 +36,7 @@ public class FacultyController {
   }
 
   //http://localhost:8080/faculty/getbycolor/22
-  @GetMapping("/getbycolor/{color}")
+  @GetMapping("/getByColor/{color}")
   public Collection<Faculty> getAllFacultyByColor(@PathVariable String color) {
     return facultyService.getFacultyByColor(color);
   }
@@ -61,6 +61,17 @@ public class FacultyController {
    facultyService.deleteFaculty(id);
     return ResponseEntity.ok().build();
   }
+ @GetMapping("/getByNameOrColor")
+public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor
+     (@RequestParam String name, String color) {
+    if (name != null && !name.isBlank()) {
+      return ResponseEntity.ok(facultyService.getFacultyByName(name));
+    }
+      if (color != null && !color.isBlank()) {
+        return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+    }
+   return ResponseEntity.notFound().build();
+ }
 
 
 }

@@ -32,10 +32,20 @@ public class FacultyService {
     return facultyRepository.findById(id).orElse(null);
   }
 
-  public List<Faculty> getFacultyByColor(String color) {
+  public Collection<Faculty> getFacultyByColor(String color) {
     return facultyRepository.findAll().stream()
         .filter(f -> f.getColor().equals(color))
         .collect(Collectors.toList());
+  }
+
+  public Collection<Faculty> getFacultyByName(String facultyName) {
+    if (facultyName != null) {
+      return facultyRepository.findAll().stream()
+          .filter(f -> f.getFacultyName().equals(facultyName))
+          .collect(Collectors.toList());
+    } else {
+      return facultyRepository.findAll();
+    }
   }
 
   public Collection<Faculty> getAllFaculty() {

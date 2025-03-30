@@ -43,7 +43,7 @@ public class Faculty {
     this.id = id;
   }
 
-  public String getName() {
+  public String getFacultyName() {
     return name;
   }
 

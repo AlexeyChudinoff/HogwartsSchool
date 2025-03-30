@@ -63,7 +63,25 @@ public class StudentController {
   @DeleteMapping("/delite")
   public ResponseEntity<Student> deleteStudent(@RequestParam Long id) {
     studentService.deleteById(id);
-return ResponseEntity.ok().build();
-
+    return ResponseEntity.ok().build();
   }
+
+  @GetMapping("/getByAgeBetween")
+  public ResponseEntity<Student> getByAgeBetween
+      (@RequestParam int AgeFrom, @RequestParam int AgeTo) {
+    studentService.getByAgeBetween(AgeFrom, AgeTo);
+    return ResponseEntity.ok().build();
+  }
+  @GetMapping("/getByName")
+  public ResponseEntity<Student> getByName
+      (@RequestParam String name) {
+    if (studentService.getByName(name) != null) {
+      return ResponseEntity.ok().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+
+
 }

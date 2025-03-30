@@ -1,5 +1,6 @@
 package ru.hogwarts.school.repository;
 
+import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.hogwarts.school.model.Faculty;
 
@@ -11,5 +12,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
   //count() возвращает число int — количество записей в таблице;
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
+  Collection<Faculty> findByNameIgnoreCase(String name);
+  Collection<Faculty> finByColorIgnoreCase(String color);
 
 }
