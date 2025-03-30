@@ -1,9 +1,12 @@
 package ru.hogwarts.school.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity(name = "student")
@@ -11,6 +14,7 @@ public class Student {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Schema(hidden = true)
   private long id;
   private String name;
   private int age;
@@ -86,4 +90,18 @@ public class Student {
         ", gender= " + gender +
          "}";
   }
+
+  @ManyToOne
+  @JoinColumn(name = "faculty_id")
+   private Faculty faculty;
+
+  public Faculty getFaculty() {
+    return faculty;
+  }
+
+  public void setFaculty(Faculty faculty) {
+    this.faculty = faculty;
+  }
+
+
 }

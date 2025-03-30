@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -26,6 +27,7 @@ public class StudentController {
 
   @PostMapping("/add")
   public Student addStudent(@RequestBody Student student) {
+    System.out.println("Получен студент: " + student);
     return studentService.create(student);
   }
 
@@ -67,21 +69,32 @@ public class StudentController {
   }
 
   @GetMapping("/getByAgeBetween")
-  public ResponseEntity<Student> getByAgeBetween
-      (@RequestParam int AgeFrom, @RequestParam int AgeTo) {
-    studentService.getByAgeBetween(AgeFrom, AgeTo);
-    return ResponseEntity.ok().build();
+  public ResponseEntity<Collection<Student>> getByAgeBetween(
+      @RequestParam("ageFrom") int ageFrom,
+      @RequestParam("ageTo") int ageTo) {
+    Collection<Student> students = studentService.getByAgeBetween(ageFrom, ageTo);
+    return ResponseEntity.ok(students);
   }
+
   @GetMapping("/getByName")
-  public ResponseEntity<Student> getByName
-      (@RequestParam String name) {
-    if (studentService.getByName(name) != null) {
-      return ResponseEntity.ok().build();
+  public ResponseEntity<Collection<Student>> getByName(
+      @RequestParam String name) {
+    Collection<Student> students = studentService.getByName(name);
+    if (!students.isEmpty()) {
+      return ResponseEntity.ok(students);
     } else {
       return ResponseEntity.notFound().build();
     }
   }
 
-
+  @GetMapping("/{studentId}/faculty")
+  public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long studentId) {
+    Student student = studentService.getById(studentId);
+    if (student == null) {
+      return ResponseEntity.notFound().build();
+    }
+    Faculty faculty = student.getFaculty();
+    return ResponseEntity.ok(faculty);
+  }
 
 }

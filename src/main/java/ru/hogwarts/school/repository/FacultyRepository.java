@@ -13,6 +13,6 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
   Collection<Faculty> findByNameIgnoreCase(String name);
-  Collection<Faculty> finByColorIgnoreCase(String color);
+  Collection<Faculty> findByColorIgnoreCase(String color);
 
 }
