@@ -24,8 +24,7 @@ public class Faculty {
   @GeneratedValue(strategy = GenerationType.IDENTITY)//strategy обозначает,
 // что будет использоваться автоинкриментация идентификатора на уровне
 // БД. Т.е. идентификатор будет генерировать база, а не приложение.
- @Schema(hidden = true) // Скрываем id в Swagger
-  // иначе при нулевом выскакивает 500 ошибка
+  @Schema(hidden = true) // Скрываем id в Swagger
   private Long id;
   private String name;
   private String color;

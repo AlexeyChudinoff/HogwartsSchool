@@ -2,7 +2,6 @@ package ru.hogwarts.school.controller;
 
 
 import java.util.Collection;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +67,8 @@ public class FacultyController {
     facultyService.deleteFaculty(id);
     return ResponseEntity.ok().build();
   }
-//@RequestParam(required = false) позволяет опускать параметры.
+
+  //@RequestParam(required = false) позволяет опускать параметры.
   @GetMapping("/getByNameOrColor")
   public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(
       @RequestParam(required = false) String name,

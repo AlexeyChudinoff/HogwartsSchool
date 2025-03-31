@@ -23,7 +23,8 @@ public class Student {
   private int age;
   private String gender;
 
-  public Student() {}
+  public Student() {
+  }
 
   public Student(String name, int age, String gender) {
     this.name = name;
@@ -99,7 +100,7 @@ public class Student {
         ", name= " + name +
         ", age= " + age +
         ", gender= " + gender +
-         "}";
+        "}";
   }
 
   @ManyToOne

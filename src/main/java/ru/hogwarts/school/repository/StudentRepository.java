@@ -12,10 +12,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   //count() возвращает число int — количество записей в таблице;
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
-  //SQL-запрос. Для него используется аннотация @Query
-//  @Query("SELECT pos FROM Student pos WHERE pos.name IS NOT NULL")
-//  List<Student> findStudentWithNotNullName();
-
   Collection<Student> findByAgeBetween(int from, int to);
 
   Collection<Student> findByNameContainingIgnoreCase(String name);
