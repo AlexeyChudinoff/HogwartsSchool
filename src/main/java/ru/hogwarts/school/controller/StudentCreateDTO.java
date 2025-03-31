@@ -1,4 +1,4 @@
-package ru.hogwarts.school.model;
+package ru.hogwarts.school.controller;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
