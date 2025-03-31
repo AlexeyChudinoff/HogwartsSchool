@@ -17,7 +17,7 @@ public class StudentService {
     this.studentRepository = studentRepository;
   }
 
-  public Student create(Student student) {
+  public  Student create(Student student) {
     return studentRepository.save(student);
   }
 
@@ -64,7 +64,7 @@ public class StudentService {
 
   public Collection<Student> getByName(String name) {
     if (name != null) {
-      return studentRepository.findByName(name);
+      return studentRepository.findByNameContainingIgnoreCase(name);
     } else {
       return studentRepository.findAll();
     }

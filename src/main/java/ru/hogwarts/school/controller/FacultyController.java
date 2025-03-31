@@ -29,6 +29,7 @@ public class FacultyController {
 
   @PostMapping("/add")
   public Faculty createFaculty(@RequestBody Faculty faculty) {
+    System.out.println("Получен факультет: " + faculty);
     return facultyService.createFaculty(faculty);
   }
 

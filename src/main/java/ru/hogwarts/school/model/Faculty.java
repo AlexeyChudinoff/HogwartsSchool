@@ -12,8 +12,9 @@ import java.util.Objects;
 
 @Entity(name = "faculty")//чтобы модель отвечала за какую-либо
 // определенную таблицу
-@JsonIgnoreProperties({"students", "facultyName"})
+@JsonIgnoreProperties({"students"})
 // Игнорируем поля при сериализации/десериализации
+
 public class Faculty {
 
   public Faculty() {
@@ -23,7 +24,8 @@ public class Faculty {
   @GeneratedValue(strategy = GenerationType.IDENTITY)//strategy обозначает,
 // что будет использоваться автоинкриментация идентификатора на уровне
 // БД. Т.е. идентификатор будет генерировать база, а не приложение.
-  @Schema(hidden = true) // Скрываем id в Swagger
+ @Schema(hidden = true) // Скрываем id в Swagger
+  // иначе при нулевом выскакивает 500 ошибка
   private Long id;
   private String name;
   private String color;
@@ -96,5 +98,10 @@ public class Faculty {
   public void setStudents(List<Student> students) {
     this.students = students;
   }
+
+  public Faculty orElseThrow(Object факультетНеНайден) {
+    return null;
+  }
+
 
 }//

@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,21 +14,31 @@ import java.util.Objects;
 public class Student {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Schema(hidden = true)
-  private long id;
+  private Long id; // Изменили long → Long иначе
+  // вылетала ошибка 500 long (примитивный тип),
+  // что несовместимо с автоинкрементом в Hibernate
   private String name;
   private int age;
   private String gender;
 
   public Student() {}
 
-  public Student(long id, String name, int age, String gender) {
-    this.id = id;
+  public Student(String name, int age, String gender) {
     this.name = name;
     this.age = age;
     this.gender = gender;
   }
+
+// были проблемы с созданием студента с присвоением
+// значения id, поэтому попробовал удалить из конструктора
+// public Student(long id, String name, int age, String gender) {
+//    this.id = id;
+//    this.name = name;
+//    this.age = age;
+//    this.gender = gender;
+//  }
 
   public String getGender() {
     return gender;
@@ -93,7 +104,9 @@ public class Student {
 
   @ManyToOne
   @JoinColumn(name = "faculty_id")
-   private Faculty faculty;
+  @JsonIdentityReference(alwaysAsId = true) // Сериализует Faculty только как ID
+  @Schema(description = "ID факультета", type = "integer", example = "1")
+  private Faculty faculty;
 
   public Faculty getFaculty() {
     return faculty;
