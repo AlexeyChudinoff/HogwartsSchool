@@ -16,15 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
+import ru.hogwarts.school.service.StudentService;
 
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
 
   private final FacultyService facultyService;
+  private final StudentService studentService;
 
-  public FacultyController(FacultyService facultyService) {
+  public FacultyController(FacultyService facultyService,
+      StudentService studentService) {
     this.facultyService = facultyService;
+    this.studentService = studentService;
   }
 
   @PostMapping("/add")
@@ -79,14 +83,14 @@ public class FacultyController {
     return ResponseEntity.ok(facultyService.getAllFaculty());
   }
 
-  @GetMapping("/{facultyId}/students")
-  public ResponseEntity<List<Student>> getFacultyStudents(@PathVariable Long facultyId) {
-    Faculty faculty = facultyService.getFacultyById(facultyId);
-    if (faculty == null) {
+  @GetMapping("/{studentId}/faculty")
+  public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long studentId) {
+    Student student = studentService.getById(studentId);
+    if (student == null) {
       return ResponseEntity.notFound().build();
     }
-    List<Student> students = faculty.getStudents();
-    return ResponseEntity.ok(students);
+    Faculty faculty = student.getFaculty();
+    return ResponseEntity.ok(faculty);
   }
 
 }

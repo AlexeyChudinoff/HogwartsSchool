@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import java.util.Collection;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -112,14 +113,14 @@ public class StudentController {
     }
   }
 
-  @GetMapping("/{studentId}/faculty")
-  public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long studentId) {
-    Student student = studentService.getById(studentId);
-    if (student == null) {
+  @GetMapping("/{facultyId}/students")
+  public ResponseEntity<List<Student>> getFacultyStudents(@PathVariable Long facultyId) {
+    Faculty faculty = facultyService.getFacultyById(facultyId);
+    if (faculty == null) {
       return ResponseEntity.notFound().build();
     }
-    Faculty faculty = student.getFaculty();
-    return ResponseEntity.ok(faculty);
+    List<Student> students = faculty.getStudents();
+    return ResponseEntity.ok(students);
   }
 
 }
