@@ -1,6 +1,9 @@
 package ru.hogwarts.school.controller;
 
 import java.util.Collection;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.StudentService;
 
 @RestController
@@ -19,15 +25,37 @@ import ru.hogwarts.school.service.StudentService;
 public class StudentController {
 
   private final StudentService studentService;
+  private final FacultyService facultyService;
 
-  public StudentController(StudentService studentService) {
+  @Autowired
+  public StudentController(StudentService studentService, FacultyService facultyService) {
     this.studentService = studentService;
+    this.facultyService = facultyService;
   }
+
 
   @PostMapping("/add")
-  public Student addStudent(@RequestBody Student student) {
-    return studentService.create(student);
+  public ResponseEntity<Student> addStudent(@RequestBody StudentCreateDTO studentDTO) {
+    Faculty faculty = facultyService.getFacultyById(studentDTO.getFacultyId());
+    if (faculty == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Факультет не найден");
+    }
+
+    Student student = new Student();
+    student.setName(studentDTO.getName());
+    student.setAge(studentDTO.getAge());
+    student.setGender(studentDTO.getGender());
+    student.setFaculty(faculty);
+
+    Student createdStudent = studentService.create(student);
+    return ResponseEntity.ok(createdStudent);
   }
+
+//  @PostMapping("/add")
+//  public Student addStudent(@RequestBody Student student) {
+//    System.out.println("Получен студент: " + student);
+//    return studentService.create(student);
+//  }
 
   @GetMapping("/getid/{id}")
   public Student getById(@PathVariable Long id) {
@@ -63,7 +91,36 @@ public class StudentController {
   @DeleteMapping("/delite")
   public ResponseEntity<Student> deleteStudent(@RequestParam Long id) {
     studentService.deleteById(id);
-return ResponseEntity.ok().build();
-
+    return ResponseEntity.ok().build();
   }
+
+  @GetMapping("/getByAgeBetween")
+  public ResponseEntity<Collection<Student>> getByAgeBetween(
+      @RequestParam("ageFrom") int ageFrom,
+      @RequestParam("ageTo") int ageTo) {
+    Collection<Student> students = studentService.getByAgeBetween(ageFrom, ageTo);
+    return ResponseEntity.ok(students);
+  }
+
+  @GetMapping("/getByName")
+  public ResponseEntity<Collection<Student>> getByName(
+      @RequestParam String name) {
+    Collection<Student> students = studentService.getByName(name);
+    if (!students.isEmpty()) {
+      return ResponseEntity.ok(students);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping("/{facultyId}/students")
+  public ResponseEntity<List<Student>> getFacultyStudents(@PathVariable Long facultyId) {
+    Faculty faculty = facultyService.getFacultyById(facultyId);
+    if (faculty == null) {
+      return ResponseEntity.notFound().build();
+    }
+    List<Student> students = faculty.getStudents();
+    return ResponseEntity.ok(students);
+  }
+
 }

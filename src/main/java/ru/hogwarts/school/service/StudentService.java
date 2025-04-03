@@ -28,11 +28,6 @@ public class StudentService {
   public Student getById(Long id) {
     return studentRepository.findById(id).orElse(null);
   }
-  //2. Вы вызываете метод `findById` репозитория `studentRepository` и передаете ему параметр `id`.
-  //3. Метод `findById` возвращает объект `Optional<Student>`, который может содержать студента или быть пустым.
-  //4. Вы вызываете метод `orElse` объекта `Optional<Student>` и передаете ему значение `null`.
-  //5. Метод `orElse` возвращает студента, если он существует, или `null`, если он не существует.
-  //Таким образом, метод `getById` возвращает студента по идентификатору или `null`, если студент не существует.
 
   public Collection<Student> getByAge(int age) {
     return studentRepository.findAll().stream()
@@ -58,4 +53,17 @@ public class StudentService {
     studentRepository.deleteById(id);
   }
 
-}
+  public Collection<Student> getByAgeBetween(int ageFrom, int ageTo) {
+    return studentRepository.findByAgeBetween(ageFrom, ageTo);
+  }
+
+  public Collection<Student> getByName(String name) {
+    if (name != null) {
+      return studentRepository.findByNameContainingIgnoreCase(name);
+    } else {
+      return studentRepository.findAll();
+    }
+  }
+
+
+}//

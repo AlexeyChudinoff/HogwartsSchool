@@ -1,5 +1,6 @@
 package ru.hogwarts.school.repository;
 
+import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.hogwarts.school.model.Student;
 
@@ -11,10 +12,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   //count() возвращает число int — количество записей в таблице;
   //deleteById() удаляет сущность из БД по ее идентификатору;
 
+  Collection<Student> findByAgeBetween(int from, int to);
 
-  //SQL-запрос. Для него используется аннотация @Query
-//  @Query("SELECT pos FROM Student pos WHERE pos.name IS NOT NULL")
-//  List<Student> findStudentWithNotNullName();
+  Collection<Student> findByNameContainingIgnoreCase(String name);
 
 
 }

@@ -2,8 +2,6 @@ package ru.hogwarts.school.service;
 
 
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
@@ -32,10 +30,12 @@ public class FacultyService {
     return facultyRepository.findById(id).orElse(null);
   }
 
-  public List<Faculty> getFacultyByColor(String color) {
-    return facultyRepository.findAll().stream()
-        .filter(f -> f.getColor().equals(color))
-        .collect(Collectors.toList());
+  public Collection<Faculty> getFacultyByName(String name) {
+    return facultyRepository.findByNameIgnoreCase(name);
+  }
+
+  public Collection<Faculty> getFacultyByColor(String color) {
+    return facultyRepository.findByColorIgnoreCase(color);
   }
 
   public Collection<Faculty> getAllFaculty() {
